@@ -1,0 +1,80 @@
+.formPage {
+  width: 100%;
+  text-align: center;
+  font-family: Garamond;
+}
+
+.mainCategorySelection {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  border-top: 2px solid forestgreen;
+}
+.mainCategorySelection label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 50px;
+  text-decoration: underline;
+  font-weight: bolder;
+}
+.mainCategorySelection label input[type="radio"] {
+  vertical-align: middle;
+  accent-color: #0076ff; /* Changes the filled circle color */
+  transform: scale(1.5); /* Optional: Increases the scale/size */
+  margin: 0;
+}
+
+.cate {
+  border-top: 2px solid darkred;
+  text-decoration: underline;
+  font-weight: lighter;
+  margin-top: 3px;
+  margin-bottom: -4px;
+}
+
+.subCategorySelection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+.subCategorySelection label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 30px;
+  font-weight: bolder;
+}
+.subCategorySelection label input[type="radio"] {
+  vertical-align: middle;
+  accent-color: #0076ff; /* Changes the filled circle color */
+  transform: scale(1); /* Optional: Increases the scale/size */
+  margin: 0;
+}
+
+.fieldSelection {
+  font-size: 20px;
+}
+.fieldSelection p {
+  text-decoration: underline;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.fieldSelection label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homebtn {
+  color: forestgreen;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  padding: 5px 5px;
+  font-weight: bold;
+}

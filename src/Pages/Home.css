@@ -1,0 +1,180 @@
+/* Headings */
+.categoryTitle,
+.subcategoryTitle {
+  font-weight: bold;
+  text-align: center;
+  font-family: Garamond;
+  margin: 0 auto;
+}
+
+.welcome-tab {
+  background-color: black;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.title {
+  font-size: 15px;
+}
+.formbtn {
+  color: forestgreen;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  padding: 5px 5px;
+  font-weight: bold;
+}
+
+.introVideo {
+  width: 100%;
+  height: auto;
+  margin-bottom: -8px;
+}
+
+.categoryTitle {
+  color: black;
+  font-size: 20px;
+  background-color: white;
+  text-align: left;
+  padding-left: 20px;
+}
+.subcategoryTitle {
+  color: forestgreen;
+  font-size: 15px;
+  margin-top: 0px;
+  text-align: right;
+  padding-right: 50px;
+  border-bottom: 2px solid forestgreen;
+  border-top: 2px solid forestgreen;
+}
+
+/* Main content area centered on page */
+.homePage {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 70px;
+}
+.scrollList {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 40px; /* consistent gap between cards */
+  padding: 20px 0;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.scrollList::-webkit-scrollbar {
+  height: 8px;
+}
+.scrollList::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 4px;
+}
+
+/* Card styles */
+.card {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  text-align: center;
+  width: 180px;
+  margin-bottom: -20px;
+}
+.cardImage {
+  width: 180px;
+  height: 180px;
+  object-fit: cover; /* keeps aspect ratio, fills box neatly */
+  border: 3px solid darkred;
+  border-radius: 8px;
+}
+.cardName {
+  margin-top: 0px;
+}
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: 48px;
+    padding: 60px 0 8px 0;
+  }
+  
+  .categoryTitle {
+    font-size: 32px;
+  }
+  
+  .subcategoryTitle {
+    font-size: 24px;
+  }
+  
+  .formbtn {
+    top: 30px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .scrollList {
+    gap: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  
+  .card {
+    width: 140px;
+  }
+  
+  .cardImage {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 32px;
+    padding: 50px 0 6px 0;
+  }
+  
+  .categoryTitle {
+    font-size: 24px;
+  }
+  
+  .subcategoryTitle {
+    font-size: 18px;
+  }
+  
+  .formbtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px 12px;
+    font-size: 12px;
+    background-color: white;
+    color: black;
+  }
+  
+  .scrollList {
+    gap: 15px;
+    padding: 15px 0;
+  }
+  
+  .card {
+    width: 110px;
+  }
+  
+  .cardImage {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .cardName {
+    font-size: 12px;
+  }
+}

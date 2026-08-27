@@ -1,0 +1,54 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 35px 15px;
+  
+  /* Increased max-width to give 5 columns enough breathing room */
+  max-width: 1000px; 
+  width: 100%;
+  margin: 0 auto; /* Centers the grid horizontally */
+  justify-content: center;
+}
+
+/* Individual Card (Square Layout) */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 10px; /* Reduced padding so content fits inside the 1:1 ratio */
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevents text overflow from expanding the square */
+}
+
+.card img {
+  width: 55%; /* Percentage width scales smoothly across all screen sizes */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* Text Container */
+.card-content {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content h4,
+.card-content p {
+  margin: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem; /* Slightly smaller text for 5-column layout */
+}
