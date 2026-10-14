@@ -1,14 +1,21 @@
 const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 export async function fetchGameResults(searchData) {
-  const query = encodeURIComponent(
-    Array.isArray(searchData.query)
-      ? searchData.query.join(" ")
-      : searchData.query || ""
-  );
+  const query = Array.isArray(searchData.query)
+    ? searchData.query.join(" ")
+    : searchData.query || "";
+  const params = new URLSearchParams({ key: RAWG_API_KEY || "" });
+
+  if (query.trim()) params.set("search", query.trim());
+  if (searchData.genres?.length) {
+    params.set("genres", searchData.genres.join(","));
+  }
+  if (searchData.platforms?.length) {
+    params.set("platforms", searchData.platforms.join(","));
+  }
 
   const rawResponse = await fetch(
-    `https://api.rawg.io/api/games?search=${query}&key=${RAWG_API_KEY}`
+    `https://api.rawg.io/api/games?${params.toString()}`
   );
 
   if (!rawResponse.ok) {

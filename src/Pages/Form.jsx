@@ -4,75 +4,77 @@ import FORM_OPTIONS from "../Components/form.js";
 import "./Form.css";
 
 export default function Form() {
-  const [category, setCategory] = useState(""); //Main categories (Music, Games, Movies, etc.)
-  const [subcategory, setSubCategory] = useState(""); //Subcategories (Genres, Artists, Arthurs, etc.)
-  const [subfield, setSubField] = useState(""); //Extra questions
-  const [query, setQuery] = useState([]); //Array for text input responses
-  const [textInput, setTextInput] = useState(""); //Text input
-  const [none, setNone] = useState([]); //Clear checklist if "Doesn't Matter" is selected
-  const [error, setError] = useState(""); //If the form is not completed
+  // Main form states for tracking user selections and inputs
+  const [category, setCategory] = useState("");
+  const [subcategory, setSubCategory] = useState("");
+  const [subfield, setSubField] = useState("");
+  const [query, setQuery] = useState([]); // List of custom text input items
+  const [textInput, setTextInput] = useState("");
+  // Track checkbox selections grouped by field ID (e.g., { genreTitles: [...], length: [...] })
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  //Find Main Category items in form.js
+  // --- DYNAMIC OPTION LOOKUPS ---
+  // Find data for the currently selected main category
   const selectedCategoryData = FORM_OPTIONS.find(
     (option) => option.value === category,
   );
-  //When category is selected display subcategories
+  // Find data for the currently selected subcategory
   const selectedSubCategoryData = selectedCategoryData?.subOptions.find(
     (subOption) => subOption.value === subcategory,
   );
-  //If other questions are available, display them
+  // Locate any nested subfields tied to the active radio button selection
   const subfieldSource = selectedSubCategoryData?.fields.find(
     (field) => field.subfields && field.subfields[subfield],
   );
   const selectedSubFieldData = subfieldSource?.subfields[subfield];
 
-  //Update text state
+  // Updates local text input state and clears any active error messages
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
     setError("");
   };
 
-  //Append the new text to the array on button click
+  // Adds a text item into the query array
   const handleAddItem = (event) => {
-    if (event) {
-      event.preventDefault(); // Prevents page reload if used inside a form
-    }
-    if (textInput.trim() === "") return; // Avoid adding empty entries
+    if (event) event.preventDefault();
+    if (textInput.trim() === "") return;
 
-    // Always use a new array (spreading) to update state cleanly
     setQuery([...query, textInput]);
-    setTextInput(""); // Reset the input box to empty
+    setTextInput("");
   };
-
+  // Removes a custom text item from the query array by its index
   const handleRemoveItem = (removeIndex) => {
     setQuery(query.filter((_, index) => index !== removeIndex));
   };
 
-  const handleCheckboxChange = (id) => {
-    if (id === "Doesn't Matter") {
-      // If "Doesn't Matter" is checked, clear everything else and only keep "Doesn't Matter"
-      setNone(["Doesn't Matter"]);
-    } else {
-      // If a regular option is checked
-      setNone((prevSelected) => {
-        // Remove "Doesn't Matter" if it was previously active
-        const filtered = prevSelected.filter(
-          (item) => item !== "Doesn't Matter",
+  // Scoped checkbox handler: manages selections independently per field ID
+  const handleCheckboxChange = (fieldId, option) => {
+    setSelectedCheckboxes((prev) => {
+      const currentFieldSelections = prev[fieldId] || [];
+      const clearOptions = ["Doesn't Matter", "Any"];
+
+      if (clearOptions.includes(option)) {
+        // Wildcard choices stand alone in their checkbox field.
+        return { ...prev, [fieldId]: [option] };
+      } else {
+        const filtered = currentFieldSelections.filter(
+          (item) => !clearOptions.includes(item),
         );
 
-        if (filtered.includes(id)) {
-          // Uncheck the regular option if it was already selected
-          return filtered.filter((item) => item !== id);
-        } else {
-          // Check the regular option
-          return [...filtered, id];
-        }
-      });
-      setError("");
-    }
+        // Toggle the clicked option on or off
+        const updatedField = filtered.includes(option)
+          ? filtered.filter((item) => item !== option)
+          : [...filtered, option];
+
+        return { ...prev, [fieldId]: updatedField };
+      }
+    });
+    setError("");
   };
 
+  // Validates form completeness and navigates to the results page with state data
   const handleNavigation = (event) => {
     event.preventDefault();
 
@@ -86,10 +88,7 @@ export default function Form() {
       return;
     }
 
-    // Find the currently active field configuration
     const activeFieldList = selectedSubCategoryData?.fields || [];
-
-    // Check if the current subcategory expects checkboxes or radio buttons
     const hasCheckboxes = activeFieldList.some(
       (field) => field.type === "checkbox",
     );
@@ -97,50 +96,52 @@ export default function Form() {
       (field) => field.type === "radio",
     );
 
-    // If it's a checkbox area (like Genres), ensure at least one box is checked
-    if (hasCheckboxes && none.length === 0) {
+    // Flatten all checkbox values across all field IDs to check if anything was selected
+    const totalCheckboxSelections = Object.values(selectedCheckboxes).flat().length;
+    if (hasCheckboxes && totalCheckboxSelections === 0) {
       setError("Please select at least one option");
       return;
     }
 
-    // If it's a radio button area (like Artists/Albums), ensure an option is selected
     if (hasRadioButtons && !subfield) {
       setError("Please select one of the options");
       return;
     }
 
-    // Validate text inputs for specific subfield choices
-    if (subfield === "Similar Artists" || subfield === "Similar Albums") {
-      if (query.length === 0) {
-        setError("Please list one or more options");
-        return;
-      }
+    if (
+      (subfield === "Similar Artists" || subfield === "Similar Albums" || subfield === "Similar Title") &&
+      query.length === 0
+    ) {
+      setError("Please list one or more options");
+      return;
     }
 
-    // Validate "Something New" checkbox requirement
-    if (subfield === "Something New" && none.length === 0) {
+    if (subfield === "Something New" && totalCheckboxSelections === 0) {
       setError("Form incompleted");
       return;
     }
 
     setError("");
+    
+    // Package structured form data and pass it through React Router state to the results page
     navigate("/results", {
       state: {
-        category: category,
-        subcategory: subcategory,
-        subfield: subfield,
-        query: query,
-        none: none,
+        category,
+        subcategory,
+        subfield,
+        query,
+        none: selectedCheckboxes.genreTitles || [], // Genre tags passed for filtering/API calls
+        lengths: selectedCheckboxes.length || [],   // Album length constraints passed for filtering
       },
     });
   };
 
   return (
     <div className="formPage">
-      <h2>...</h2>
+      <h2 className="f-title">Show Me...</h2>
 
-      <form onSubmit={handleAddItem}>
-        {/* Main Category Selection */}
+      <div className="form-container">
+        {/* 1. Main Category Selection (e.g., Music, Games) */}
         <div className="mainCategorySelection">
           {FORM_OPTIONS.map((option) => (
             <label key={option.value}>
@@ -150,11 +151,13 @@ export default function Form() {
                 value={option.value}
                 checked={category === option.value}
                 onChange={(e) => {
+                  // Reset downstream selections whenever the main category changes
                   setCategory(e.target.value);
                   setSubCategory("");
                   setSubField("");
                   setQuery([]);
                   setTextInput("");
+                  setSelectedCheckboxes({});
                   setError("");
                 }}
               />
@@ -163,8 +166,7 @@ export default function Form() {
           ))}
         </div>
 
-        {/* Subcategories - Only show once a category is selected */}
-        {category && <h1 className="cate">{category}</h1>}
+        {/* 2. Subcategories Selection (e.g., Genres, Albums, Artists) */}
         {selectedCategoryData && (
           <div className="subCategorySelection">
             {selectedCategoryData.subOptions.map((subOption) => (
@@ -176,10 +178,12 @@ export default function Form() {
                     value={subOption.value}
                     checked={subcategory === subOption.value}
                     onChange={(e) => {
+                      // Reset child choices when subcategory changes
                       setSubCategory(e.target.value);
                       setSubField("");
                       setQuery([]);
                       setTextInput("");
+                      setSelectedCheckboxes({});
                       setError("");
                     }}
                   />
@@ -190,12 +194,13 @@ export default function Form() {
           </div>
         )}
 
-        {/* Choices - Only show once a subcategory is selected */}
+        {/* 3. Primary Field Choices (Checkboxes or Radio options) */}
         {selectedSubCategoryData && (
           <div className="fieldSelection">
             {selectedSubCategoryData.fields.map((field) => (
               <div key={field.id} className="formField">
-                <p htmlFor={field.id}>{field.label}</p>
+                <p>{field.label}</p>
+
                 {field.type === "checkbox" && (
                   <div>
                     {field.options.map((option) => (
@@ -205,8 +210,8 @@ export default function Form() {
                           id={field.id}
                           name={field.id}
                           value={option}
-                          checked={none.includes(option)}
-                          onChange={() => handleCheckboxChange(option)}
+                          checked={(selectedCheckboxes[field.id] || []).includes(option)}
+                          onChange={() => handleCheckboxChange(field.id, option)}
                         />
                         {option}
                       </label>
@@ -238,12 +243,17 @@ export default function Form() {
           </div>
         )}
 
-        {/* Subfields - Only show if a subcategory field has subfields */}
+        {/* 4. Nested Subfields (e.g., Track Length selectors or Text input bars) */}
         {selectedSubFieldData && (
-          <div>
+          <div className="subFieldSelection">
             {selectedSubFieldData.map((subfieldItem) => (
               <div key={subfieldItem.id} className="formField">
-                <label htmlFor={subfieldItem.id}>{subfieldItem.label}</label>
+                <p>
+                  <label htmlFor={subfieldItem.id}>
+                    {subfieldItem.label}
+                  </label>
+                </p>
+
                 {subfieldItem.type === "checkbox" && (
                   <div>
                     {subfieldItem.options.map((option) => (
@@ -253,14 +263,15 @@ export default function Form() {
                           id={subfieldItem.id}
                           name={subfieldItem.id}
                           value={option}
-                          checked={none.includes(option)}
-                          onChange={() => handleCheckboxChange(option)}
+                          checked={(selectedCheckboxes[subfieldItem.id] || []).includes(option)}
+                          onChange={() => handleCheckboxChange(subfieldItem.id, option)}
                         />
                         {option}
                       </label>
                     ))}
                   </div>
                 )}
+
                 {subfieldItem.type === "text" && (
                   <div className="textInputField">
                     <input
@@ -270,20 +281,27 @@ export default function Form() {
                       value={textInput}
                       onChange={handleInputChange}
                       placeholder={subfieldItem.label}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleAddItem(e);
+                        }
+                      }}
                     />
-                    <button type="submit">Add Item</button>
+                    <button className="add-button" type="button" onClick={handleAddItem}>
+                      ✓
+                    </button>
                   </div>
                 )}
               </div>
             ))}
           </div>
         )}
-        {error && <p className="errorMessage">{error}</p>}
-        <Link className="submit" to="/results" onClick={handleNavigation}>
-          What You About to Get?
-        </Link>
-      </form>
 
+        {/* Error message display banner */}
+        {error && <p className="errorMessage">{error}</p>}
+      </div>
+
+      {/* Submitted Text Items List (Chips/Tags preview) */}
       {query.length > 0 && (
         <div className="submittedItems">
           <h3>Similar to...</h3>
@@ -303,10 +321,14 @@ export default function Form() {
           </ul>
         </div>
       )}
-
+      
+      {/* Navigation Buttons */}
       <Link className="homebtn" to="/">
-        Back to Home
+        {"<-"} Back to Home
       </Link>
+      <button className="submit" onClick={handleNavigation}>
+        What You About to Get? {"->"}
+      </button>
     </div>
   );
 }

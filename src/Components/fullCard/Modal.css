@@ -1,0 +1,183 @@
+/* --- MODAL ZOOM-IN ANIMATION --- */
+@keyframes modalZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Backdrop */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+
+  animation: overlayFadeIn 0.2s ease forwards;
+}
+
+/* Modal Content Card */
+.modal-content {
+  background: #101014;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 420px;
+  width: 90%;
+  max-height: 85vh; /* Prevents the modal from exceeding 85% of the screen height */
+  overflow-y: auto;  /* Adds a clean scrollbar when content exceeds max-height */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  animation: modalZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.modal-close:hover {
+  color: #fff;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.modal-title {
+  margin: 8px 0;
+  font-size: 1.3rem;
+}
+
+/* Keep metadata readable and left-aligned beneath the centered title. */
+.modal-details {
+  margin: 12px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+  width: 100%;
+}
+
+/* Lay out artist tracks and albums in responsive groups inside the modal. */
+.modal-featured-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+.modal-featured-content h4 {
+  margin: 0 0 6px;
+}
+.modal-featured-content ul {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+.modal-cover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  gap: 10px;
+  list-style: none;
+}
+.modal-cover-grid li {
+  min-width: 0;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+/* Give every cover a stable square footprint, including the local missing-art image. */
+.modal-cover-grid img,
+.modal-cover-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.modal-cover-placeholder {
+  background: #34343c;
+}
+
+/* Spotify-linked titles use the service accent color and remain visually distinct. */
+.spotify-item-title {
+  display: block;
+  margin-top: 5px;
+  color: #1ed760;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.spotify-item-title:hover {
+  text-decoration: underline;
+}
+
+/* Put the external provider link and the app's internal action side by side when space allows. */
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+.modal-action-btn,
+.modal-external-btn {
+  box-sizing: border-box;
+  flex: 1 1 150px;
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-action-btn {
+  background-color: #ff4b5c;
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+.modal-action-btn:hover {
+  background-color: #e03e4e;
+}
+.modal-external-btn {
+  background-color: #1ed760;
+  color: #101014;
+}
+.modal-external-btn:hover {
+  background-color: #1fbd55;
+}

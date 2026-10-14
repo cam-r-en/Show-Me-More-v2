@@ -1,7 +1,24 @@
 .formPage {
-  width: 100%;
+  width: 75%;
+  height: 75%;
   text-align: center;
-  font-family: Garamond;
+  background-color: white;
+  justify-self: center;
+  align-self: center;
+  padding-bottom: 30px;
+  color: black;
+  margin-bottom: 75px;
+
+  border-radius: 10px;
+  font-family: "Silkscreen", sans-serif;
+}
+
+.f-title {
+  font-family: "Righteous", cursive, sans-serif;
+  color: black;
+  font-size: 60px;
+
+  margin-bottom: 0px;
 }
 
 .mainCategorySelection {
@@ -9,7 +26,7 @@
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
-  border-top: 2px solid forestgreen;
+  border-top: 10px solid forestgreen;
 }
 .mainCategorySelection label {
   display: flex;
@@ -17,21 +34,21 @@
   gap: 0.5rem;
   font-size: 50px;
   text-decoration: underline;
-  font-weight: bolder;
+}
+.mainCategorySelection label:hover {
+  cursor: pointer;
+  color: green;
 }
 .mainCategorySelection label input[type="radio"] {
   vertical-align: middle;
   accent-color: #0076ff; /* Changes the filled circle color */
   transform: scale(1.5); /* Optional: Increases the scale/size */
   margin: 0;
+  appearance: none;
 }
-
-.cate {
-  border-top: 2px solid darkred;
-  text-decoration: underline;
-  font-weight: lighter;
-  margin-top: 3px;
-  margin-bottom: -4px;
+.mainCategorySelection label:has(input[type="radio"]:checked) {
+  font-weight: bold;
+  color: green;
 }
 
 .subCategorySelection {
@@ -40,19 +57,33 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+
+  border-top: 2px solid forestgreen;
+  margin-top: 5px;
+  padding-top: 2px;
 }
 .subCategorySelection label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 30px;
-  font-weight: bolder;
+}
+.subCategorySelection label:hover {
+  cursor: pointer;
+  color: green;
 }
 .subCategorySelection label input[type="radio"] {
   vertical-align: middle;
   accent-color: #0076ff; /* Changes the filled circle color */
   transform: scale(1); /* Optional: Increases the scale/size */
   margin: 0;
+
+  appearance: none;
+}
+.subCategorySelection label:has(input[type="radio"]:checked) {
+  font-weight: bolder;
+  color: green;
+  text-decoration: underline;
 }
 
 .fieldSelection {
@@ -62,19 +93,141 @@
   text-decoration: underline;
   margin-top: 0px;
   margin-bottom: 0px;
+  color: darkred;
 }
 .fieldSelection label {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.fieldSelection label:hover {
+  cursor: pointer;
+  color: red;
+}
+.fieldSelection label:has(input[type="radio"]:checked) {
+  color: darkred;
+}
 
-.homebtn {
-  color: forestgreen;
+.subFieldSelection {
+  font-size: 15px;
+}
+.subFieldSelection p {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  color: red;
+  text-decoration: underline;
+}
+.subFieldSelection label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.subFieldSelection label:hover {
+  cursor: pointer;
+  color: red;
+}
+.subFieldSelection label:has(input[type="radio"]:checked) {
+  color: darkred;
+}
+
+.submittedItems {
+  width: fit-content;
+  margin: 4px auto 12px;
+}
+.submittedItems h3 {
+  margin: 0 0 4px;
+}
+.submittedItems ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.submittedItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.removeItemButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-size: 12px;
+  color: red;
+
+  margin-left: -5px;
+  margin-top: 1px;
+
+  cursor: pointer;
+  font-family: "Silkscreen", sans-serif;
+}
+.removeItemButton:hover {
+  color: darkred;
+}
+
+.textInputField input[type="text"] {
+  background-color: rgb(250, 251, 252);
+  border: 2px solid rgb(223, 225, 230);
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: rgb(9, 30, 66);
+  cursor: text;
+  font-family: "Silkscreen", sans-serif;
+  font-size: 14px;
+  height: 36px;
+  line-height: 1.42857;
+  padding: 8px 6px;
+  transition:
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+
+  margin-bottom: 10px;
+}
+
+.textInputField input[type="text"]:hover {
+  background-color: rgb(235, 236, 240);
+}
+
+.textInputField input[type="text"]:focus {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(76, 154, 255);
+}
+.add-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 5px;
+  outline: none;
+
+  font-family: "Silkscreen", sans-serif;
+  font-size: 25px;
+  color: green;
+
+  cursor: pointer;
+}
+.add-button:hover {
+  color: lawngreen;
+}
+
+.submit {
+  color: black;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  background-color: white;
+  background-color: forestgreen;
   padding: 5px 5px;
-  font-weight: bold;
+  font-family: "Righteous", cursive, sans-serif;
+}
+.homebtn {
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: darkred;
+  padding: 5px 5px;
+  font-family: "Righteous", cursive, sans-serif;
 }

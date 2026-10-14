@@ -1,10 +1,12 @@
-import { fetchSpotifyResults } from "../Components/musicResults.js";
-import { fetchGameResults } from "../Components/gameResults.js";
+import { fetchLastfmResults, fetchMoreGenreResults, getAccessToken } from "./musicResults.js";
+import { fetchGameResults } from "./gameResults.js";
+
+export { fetchMoreGenreResults, getAccessToken };
 
 export async function fetchResultsByCategory(searchData) {
   switch (searchData.category) {
     case "Music":
-      return await fetchSpotifyResults(searchData);
+      return await fetchLastfmResults(searchData);
     case "Games":
       return await fetchGameResults(searchData);
     default:

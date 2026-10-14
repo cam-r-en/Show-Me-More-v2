@@ -1,34 +1,107 @@
-.card-grid {
+.results-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.r-top {
+  width: 100%;
+  background-color: white;
+  margin-bottom: 0px;
+  border-bottom: 2px solid darkgreen;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.r-title {
+  justify-self: center;
+  align-self: center;
+  font-family: "Silkscreen", sans-serif;
+  color: black;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+.form-button {
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: darkred;
+  padding: 5px 5px;
+  font-family: "Righteous", cursive, sans-serif;
+  font-size: 10px;
+  margin-top: 0px;
+
+  justify-self: center;
+  align-self: center;
+  margin-bottom: 15px;
+}
+
+.r-sub {
+  font-family: "Righteous", cursive, sans-serif;
+  text-align: center;
+  text-decoration: underline;
+
+  /* Break out of parent container to span full screen width */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
+  border-bottom: 2px solid darkgreen;
+  padding-bottom: 8px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.r-card-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(3, auto);
-  gap: 35px 15px;
-  
-  /* Increased max-width to give 5 columns enough breathing room */
-  max-width: 1000px; 
+  gap: 45px 50px;
+
+  max-width: 1000px;
   width: 100%;
   margin: 0 auto; /* Centers the grid horizontally */
   justify-content: center;
+
+  padding: 20px;
+  border-radius: 10px;
 }
 
-/* Individual Card (Square Layout) */
-.card {
+/* Individual Card */
+.r-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 8px;
-  padding: 10px; /* Reduced padding so content fits inside the 1:1 ratio */
-  background-color: #1e1e1e;
+  background-color: darkgreen;
   border-radius: 8px;
   aspect-ratio: 1 / 1;
   box-sizing: border-box;
-  overflow: hidden; /* Prevents text overflow from expanding the square */
-}
+  overflow: hidden;
 
-.card img {
-  width: 55%; /* Percentage width scales smoothly across all screen sizes */
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s ease;
+}
+.r-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(243, 239, 239, 0.258);
+}
+.r-card:active {
+  transform: scale(0.96);
+}
+.r-card img {
+  width: 55%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 6px;
@@ -36,19 +109,35 @@
 }
 
 /* Text Container */
-.card-content {
+.r-card-content {
   width: 100%;
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
-
-.card-content h4,
-.card-content p {
+.r-card-content h4 {
   margin: 0;
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.85rem; /* Slightly smaller text for 5-column layout */
+  font-size: 0.85rem;
+  color: white;
+  font-family: "Lilita One", cursive;
+}
+
+.toggle-btn-container {
+  margin-top: 0px;
+  justify-self: center;
+  align-self: center;
+}
+.toggle-more-btn {
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  padding: 5px 5px;
+  font-family: "Righteous", cursive, sans-serif;
+  font-size: 10px;
 }
