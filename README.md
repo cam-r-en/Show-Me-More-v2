@@ -1,5 +1,22 @@
 # React + Vite
 
+## GitHub Pages
+
+The site deploys to GitHub Pages when changes are pushed to `master` using
+`.github/workflows/deploy.yml`. In the repository settings, select **Settings >
+Pages > Build and deployment > GitHub Actions** as the Pages source.
+
+Add repository Actions variables named `VITE_LASTFM_API_KEY` and
+`VITE_RAWG_API_KEY` so Last.fm and RAWG features are configured in the Pages
+build. These browser API keys are visible to site visitors; do not use this
+mechanism for confidential credentials.
+
+GitHub Pages serves static files and cannot protect the Spotify client secret.
+The Spotify client-credentials flow currently used by the app needs a secure
+backend token endpoint, or a browser-based Spotify Authorization Code with
+PKCE flow, before Spotify API features can be safely enabled on the public
+deployment. Do not add the Spotify client secret as a `VITE_` variable.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

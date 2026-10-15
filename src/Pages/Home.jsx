@@ -236,11 +236,11 @@ export default function Home() {
       {/* Background Video Intro Section */}
       <div className="video-intro">
         <video className="bg-video" autoPlay loop muted>
-          <source src="imgs/SMM.mov" type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}imgs/SMM.mov`} type="video/mp4" />
         </video>
         <div className="video-overlay"></div>
         <video className="introVideo" autoPlay loop muted>
-          <source src="imgs/SMM.mov" type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}imgs/SMM.mov`} type="video/mp4" />
         </video>
       </div>
 
@@ -260,7 +260,7 @@ export default function Home() {
               {index < array.length - 1 && (
                 <div className="smm-divider-container">
                   <img
-                    src="/imgs/Show Me.gif"
+                    src={`${import.meta.env.BASE_URL}imgs/Show Me.gif`}
                     alt="Divider animation"
                     className="smm-divider"
                   />

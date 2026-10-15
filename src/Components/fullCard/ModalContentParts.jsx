@@ -1,4 +1,4 @@
-import defaultSongCover from "../../../imgs/Default [Songs].png";
+const defaultSongCover = `${import.meta.env.BASE_URL}imgs/Default%20%5BSongs%5D.png`;
 
 // Render the preformatted label/value pairs prepared by the utility module.
 export function ModalDetailsList({ details }) {

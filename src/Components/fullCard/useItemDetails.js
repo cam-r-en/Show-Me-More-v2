@@ -4,7 +4,7 @@ import { searchSpotifyItem } from "./mediaAPI.js";
 import { formatDuration, getLastFmCover } from "./utility.js";
 
 const LASTFM_API_KEY = import.meta.env.VITE_LASTFM_API_KEY;
-const RAWG_API_KEY = import.meta.env.RAWG_API_KEY;
+const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 // Load provider-specific details for the selected item, then return one
 // display-ready object that the modal can render consistently.

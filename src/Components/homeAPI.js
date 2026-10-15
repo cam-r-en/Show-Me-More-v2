@@ -2,6 +2,8 @@ const LASTFM_API_KEY = import.meta.env.VITE_LASTFM_API_KEY;
 const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 const SPOTIFY_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const SPOTIFY_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+const publicAssetUrl = (path) =>
+  `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
 
 export const customImages = {
   music: {
@@ -47,18 +49,14 @@ export const customImages = {
   },
 };
 
-const FALLBACK_ARTIST_IMAGE = "imgs/Default [Artists].png";
-const FALLBACK_ALBUM_IMAGE = "imgs/Default [Albums].png";
+const FALLBACK_ARTIST_IMAGE = publicAssetUrl("imgs/Default [Artists].png");
+const FALLBACK_ALBUM_IMAGE = publicAssetUrl("imgs/Default [Albums].png");
 // Helper: Safely retrieve namespaced custom images
 export function getCustomImage(name, mediaType = "music") {
   if (!name) return null;
-  if (customImages[mediaType]?.[name]) {
-    return customImages[mediaType][name];
-  }
-  if (customImages.globals?.[name]) {
-    return customImages.globals[name];
-  }
-  return null;
+  const image = customImages[mediaType]?.[name] || customImages.globals?.[name];
+  if (!image) return null;
+  return image.startsWith("http") ? image : publicAssetUrl(image);
 }
 
 // Format genre title: "hip-hop" -> "Hip-Hop", "pop" -> "Pop"
