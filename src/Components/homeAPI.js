@@ -390,6 +390,7 @@ export async function fetchHomeContent() {
 
     return {
       ...genre,
+      type: "game-genre",
       name: formattedName,
       image_background:
         customImg || genre.image_background || FALLBACK_ALBUM_IMAGE,

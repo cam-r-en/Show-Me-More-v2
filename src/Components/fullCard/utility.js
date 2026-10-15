@@ -93,7 +93,7 @@ export const getItemDetails = (item) => {
 
   // Genre cards already identify their own genre in the title, so don't repeat it.
   const activeGenres = item.genres?.length > 0 ? item.genres : item.tags;
-  const isGenreItem = ["genre", "tag", "category"].includes((item.type || "").toLowerCase());
+  const isGenreItem = ["genre", "tag", "category", "game-genre"].includes((item.type || "").toLowerCase());
   if (!isGenreItem && Array.isArray(activeGenres) && activeGenres.length > 0) {
     const genreList = activeGenres.map((g) => (typeof g === "string" ? g : g.name)).join(", ");
     addDetail("Genres", genreList);
