@@ -2,7 +2,7 @@
 
 ## GitHub Pages
 
-The site deploys to GitHub Pages when changes are pushed to `master` using
+The site deploys to GitHub Pages when changes are pushed to `main` using
 `.github/workflows/deploy.yml`. In the repository settings, select **Settings >
 Pages > Build and deployment > GitHub Actions** as the Pages source.
 
